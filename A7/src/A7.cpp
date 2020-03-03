@@ -35,7 +35,18 @@ public:
 	void del_key(string key);
 	int find(string key);
 	void display_Table();
+	int isEmpty_Hash();
 };
+
+int Table::isEmpty_Hash(){
+	for(int i=0;i<MAX;i++){
+		if((table[i].name).length()==0){
+			return 1;
+		}
+	}
+      return 0;
+
+}
 
 int Table::hash_generator(string key){
 	int sum=0;
@@ -49,17 +60,87 @@ int Table::hash_generator(string key){
 	     return index;
 }
 
+/*void Table::insert_withoutreplacement(string key,string mean){
+	 int index=hash_generator(key);
+     cout<<index;
+
+	 /*if(!isEmpty_Hash()){
+		 cout<<"HASH TABLE IS FULL!!"<<endl;
+	 }
+             int i,flag;
+                 	  for(i=index+1; ;i++){
+                 		  if(i==MAX){
+                 			  i=0;
+                 		  }
+                 		  if(i==index){
+                 			  flag=0;
+                 			  break;
+                 		  }
+                 		  if((table[i].name).length()==0){
+                 			  flag=1;
+                 			  break;
+                 		  }
+                 	  }
+
+         if(flag==1){
+
+  	         int j;
+               for(j=0; ;j++){
+  	     		if(hash_generator(table[j].name)==hash_generator(key)){
+  	     		   break;
+  	     	    }
+  	     		if(j>=MAX){break;}
+  	          }
+
+               cout<<j;
+
+               if(j>=MAX){
+            	   if((table[index].name).length()==0){
+            	       	 table[index].name=key;
+            	       	 table[index].attribute=mean;
+            	       	 return;
+            	        }
+            	   else {
+            		   table[i].name=key;
+            		   table[i].attribute=mean;
+            		   return;
+            	   }
+               }
+
+          while(table[j].chain!=-1){
+   			  j=table[index].chain;
+   		  }
+   		  table[j].chain=i;
+   		  table[i].name=key;
+   		  table[i].attribute=mean;
+
+	 }
+}*/
+
+
 void Table::insert_withoutreplacement(string key,string mean){
 	 int index=hash_generator(key);
 
-     if((table[index].name).length()==0){
+     /*if((table[index].name).length()==0){
     	 table[index].name=key;
     	 table[index].attribute=mean;
     	 return;
-     }
+     }*/
+
+	                int j=0;
+	     		                 for(j=0;j<MAX;j++){
+	     		    	     		if(hash_generator(table[j].name)==hash_generator(key)){
+	     		    	     		   break;
+	     		    	     	    }
+                                  }
+
+	     		                 cout<<j;
 
 
-     else{                           //WITHOUT REPLACEMENT CONDITION
+
+
+
+    // else{                           //WITHOUT REPLACEMENT CONDITION
     	 int i,flag;
     	  for(i=index+1; ;i++){
     		  if(i==MAX){
@@ -75,25 +156,31 @@ void Table::insert_withoutreplacement(string key,string mean){
     		  }
     	  }
     	  if(flag==1){
-    		  int f=index;
+    		             if(j>=MAX || (table[j].name).length()==0 ){
+    		  	     		              	   if((table[index].name).length()==0){
+    		  	     		              	       	 table[index].name=key;
+    		  	     		              	       	 table[index].attribute=mean;
+    		  	     		              	       	 return;
+    		  	     		              	        }
+    		  	     		              	   else {
+    		  	     		              		   table[i].name=key;
+    		  	     		              		   table[i].attribute=mean;
+    		  	     		              		   return;
+    		  	     		              	   }
+    		  	     		                 }
 
-    		  /*for(int j=0; ;j++){
-    			  if()
-    		  }*/
-
-    		  while(table[f].chain!=-1){
-    			  f=table[index].chain;
+    		  while(table[j].chain!=-1){
+    			  j=table[index].chain;
     		  }
-    		  table[f].chain=i;
+    		  table[j].chain=i;
     		  table[i].name=key;
     		  table[i].attribute=mean;
-
     	  }
     	  else{
     		  cout<<endl;
     		  cout<<"HASH TABLE FULL!!"<<endl;
     	  }
-     }
+     //}
 }
 
 void Table::insert_withreplacement(string key,string mean){
@@ -107,7 +194,8 @@ void Table::insert_withreplacement(string key,string mean){
 	 else if(table[index].name==key){
 		 cout<<"Enter Unique Name!"<<endl;
 	 }
-	     else if(table[index].name!=key){              //REPLACEMENT CONDITION
+
+	   else if(table[index].name!=key){              //REPLACEMENT CONDITION
 	    	 int index2=hash_generator(table[index].name);
 	    	 if(index!=index2){
 	    	 string tempkey=key;
